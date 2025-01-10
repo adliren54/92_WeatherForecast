@@ -22,21 +22,25 @@ def weatherCodeTranslator(number):
     return "Showery precipitation, or precipitation with current or recent thunderstorm at the station at the time of observation"
     
 timezone = "GMT"
-latitude = 48.1371#float(input("Latitude > ")) #48.1371
-longitude = 11.5820#float(input("Longitude > "))#11.5820
+latitude = float(input("Latitude > ")) #48.1371
+longitude = float(input("Longitude > "))#11.5820
 
 result = requests.get(f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone={timezone.upper()}")
 
 
 user = result.json()
-print(user['daily']['time'][0])
 
-for i in len(range(user["daily"]["time"])):
+for i in range(len(user["daily"]["time"])):
   weatherCode = user['daily']['weathercode'][i]
   min = user['daily']['temperature_2m_max'][i]
   max = user['daily']['temperature_2m_min'][i]
-  print(f"{weatherCodeTranslator(weatherCode)}.\n Maximum temperature is {max} and minimum temperature is {min}.")
+  print(user['daily']['time'][i])
+  print()
+  print(f"{weatherCodeTranslator(weatherCode)}.")
+  print(f"Maximum temperature is {max} and minimum temperature is {min}.")
+  print()
+  print()
 
 #print(f"{weatherCodeTranslator(weatherCode)}.\n Maximum temperature is {max} and minimum temperature is {min}.")
 
-print(json.dumps(user, indent=2))
+#print(json.dumps(user, indent=2))
